@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historia de la Hamburguesa</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <header class="section mb-5">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Historia de la Hamburguesa</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#hamburguesa" tabindex="0">Hamburguesa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#hotdog" tabindex="0">Hotdog</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main class="container">
+        <section id="hamburguesa" class="section" tabindex="0">
+            <h2 class="mb-4">Historia de la Hamburguesa</h2>
+            <p>La hamburguesa, tal como la conocemos hoy, tiene una historia rica y compleja. Su origen se remonta a la antigua Hamburgo, Alemania, donde la carne picada y condimentada era un alimento popular. Sin embargo, la transformación de esta carne en el sándwich que conocemos hoy en día ocurrió en los Estados Unidos a finales del siglo XIX y principios del siglo XX.</p>
+            <p>La primera mención de una hamburguesa en un menú de restaurante en los Estados Unidos fue en 1834 en el Delmonico's en Nueva York, aunque no era exactamente lo que conocemos como una hamburguesa moderna. La popularidad de la hamburguesa aumentó durante la Exposición Universal de 1904 en St. Louis, donde se sirvió una versión moderna del sándwich.</p>
+            <p>Con el tiempo, la hamburguesa se convirtió en un símbolo de la comida rápida estadounidense, especialmente con la aparición de cadenas como White Castle en 1921 y McDonald's en 1948. Hoy en día, la hamburguesa es un alimento universal con innumerables variantes en todo el mundo.</p>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <img src="hamburguesa1.jpg" alt="Una hamburguesa con queso, pepinillos, tomate y cebolla" tabindex="0" class="img-fluid rounded" style="width: 300px">
+                </div>  
+                <div class="col-md-6 mb-3">
+                    <img src="hamburguesa2.jpeg" alt="Una hamburguesa vegetariana" tabindex="0" class="img-fluid rounded" style="width: 500px">
+                </div>
+            </div>
+            <button class="btn btn-primary btn-block cart-button" tabindex="0">Añadir Hamburguesa Clásica</button>
+            <button class="btn btn-primary btn-block cart-button" tabindex="0">Añadir Hamburguesa con Queso</button>
+            <button class="btn btn-primary btn-block cart-button" tabindex="0">Añadir Hamburguesa Vegetariana</button>
+        </section>
+        <section id="hotdog" class="section" tabindex="0" style="display: none;">
+            <h2 class="mb-4">Historia del Hotdog</h2>
+            <p>El hotdog, también conocido como perro caliente, es otro alimento icónico con una historia fascinante. Se cree que los primeros hotdogs fueron creados por carniceros alemanes en el siglo XIX, quienes llevaban su tradición de embutidos a los Estados Unidos.</p>
+            <p>Uno de los primeros lugares donde se vendieron hotdogs fue en Coney Island, Nueva York, a finales del siglo XIX. Charles Feltman, un inmigrante alemán, comenzó a vender salchichas en un pan a lo largo de la playa en 1867. Esta práctica ganó popularidad rápidamente y otros vendedores comenzaron a ofrecer versiones similares.</p>
+            <p>El hotdog ganó aún más popularidad durante la Exposición Mundial de 1893 en Chicago, donde se sirvieron miles de hotdogs a los asistentes. Durante el siglo XX, el hotdog se convirtió en un alimento básico en eventos deportivos y ferias en todo Estados Unidos. Hoy en día, los hotdogs se disfrutan en muchas partes del mundo y vienen en una variedad de estilos y con diferentes aderezos.</p>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <img src="hotdog1.jpg" alt="Un hotdog con mostaza y ketchup" tabindex="0" class="img-fluid rounded">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <img src="hotdog2.jpg" alt="Un hotdog con todos los aderezos" tabindex="0" class="img-fluid rounded">
+                </div>
+            </div>
+            <button class="btn btn-primary btn-block cart-button" tabindex="0">Añadir Hotdog Clásica</button>
+            <button class="btn btn-primary btn-block cart-button" tabindex="0">Añadir Hotdog con Queso</button>
+            <button class="btn btn-primary btn-block cart-button" tabindex="0">Añadir Hotdog Vegetariana</button>
+            
+
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.section');
+            let currentUtterance = null;
+
+            function speakText(text) {
+                if (currentUtterance) {
+                    speechSynthesis.cancel();
+                }
+                currentUtterance = new SpeechSynthesisUtterance(text);
+                speechSynthesis.speak(currentUtterance);
+            }
+
+            sections.forEach(section => {
+                section.addEventListener('focus', () => {
+                    speakText(section.innerText);
+                });
+            });
+
+            const images = document.querySelectorAll('img');
+            images.forEach(image => {
+                image.addEventListener('focus', () => {
+                    speakText(image.alt);
+                });
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('focus', () => {
+                    speakText(link.innerText);
+                });
+
+                link.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter') {
+                        const targetSection = document.querySelector(link.getAttribute('href'));
+                        document.querySelectorAll('section').forEach(section => section.style.display = 'none');
+                        targetSection.style.display = 'block';
+                        targetSection.focus();
+                    }
+                });
+            });
+
+            const cartButtons = document.querySelectorAll('.cart-button');
+            cartButtons.forEach(button => {
+                button.addEventListener('focus', () => {
+                    speakText(button.innerText);
+                });
+
+                button.addEventListener('click', () => {
+                    speakText('Presione la barra espaciadora para añadir');
+                    alert(button.innerText + ' añadida al carrito.');
+                    speakText(' Se ha añadido la hamburguesa al carrito.');
+                });
+            });
+
+            
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === ' ') {
+                    event.preventDefault();
+                    if (speechSynthesis.speaking) {
+                        if (speechSynthesis.paused) {
+                            speechSynthesis.resume();
+                        } else {
+                            speechSynthesis.pause();
+                        }
+                    }
+                }
+            });
+
+            const focusableElements = document.querySelectorAll('a, section, img, button');
+            const firstFocusableElement = focusableElements[0];
+            const lastFocusableElement = focusableElements[focusableElements.length - 1];
+
+            lastFocusableElement.addEventListener('keydown', (event) => {
+                if (event.key === 'Tab' && !event.shiftKey) {
+                    event.preventDefault();
+                    firstFocusableElement.focus();
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
